@@ -1,31 +1,30 @@
 #!/usr/bin/env php
-
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+use function Gendiff\Differ\genDiff;
 
-//use function differ\differ;
-
-$doc = <<<DOC
-
-Generate diff
-
-Usage:
-  gendiff (-h|--help)
-  gendiff (-v|--version)
-  gendiff [--format <fmt>] <firstFile> <secondFile>
-
-Options:
-  -h --help                     Show this screen
-  -v --version                  Show version
-  --format <fmt>                Report format [default: stylish]
-
-DOC;
-
-$args = Docopt::handle($doc, ['version' => 'Generate diff 0.1']);
-
-if (!isset($args->args['--format'])) {
-    $format = 'stylish';
+$autoloadPath1 = __DIR__ . '/../../../autoload.php';
+$autoloadPath2 = __DIR__ . '/../vendor/autoload.php';
+if (file_exists($autoloadPath1)) {
+    require_once $autoloadPath1;
 } else {
-    $format = $args->args['--format'];
+    require_once $autoloadPath2;
 }
+
+const DOC = <<<'DOCOPT'
+Generate diff
+Usage:
+  gendiff (-h | --help)
+  gendiff (-v | --version)
+  gendiff [--format <fmt>] <firstFile> <secondFile>
+Options:
+  -h --help       Show this screen
+  -v --version    Show version and exit
+  --format <fmt>  Report format [default: pretty]
+DOCOPT;
+
+$args = \Docopt::handle(DOC, ['version' => '1.0.0rc2']);
+
+$diff = genDiff($args['<firstFile>'], $args['<secondFile>'], $args['--format']);
+
+print_r($diff . PHP_EOL);
