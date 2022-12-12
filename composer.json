@@ -1,0 +1,46 @@
+{
+    "name": "hexlet/code",
+    "type": "library",
+    "description": "cli tool",
+    "keywords": [
+        "cli",
+        "tool"
+    ],
+    "license": "MIT",
+    "bin": [
+        "bin/gendiff"
+    ],
+    "scripts": {
+        "phpcs": "phpcs",
+        "psysh": "psysh",
+        "phpcbf": "phpcbf",
+        "phpunit": "phpunit",
+        "test": "phpunit tests"
+    },
+    "autoload": {
+        "psr-4": {
+            "Gendiff\\": "src",
+            "Gendiff\\Tests\\": "tests"
+        },
+        "files": [
+            "src/Differ.php",
+            "src/Parsers.php",
+            "src/formatters/RenderPretty.php",
+            "src/formatters/RenderPlain.php",
+            "src/formatters/RenderJson.php",
+            "src/formatters/Formatters.php",
+            "src/Builder.php"
+        ]
+    },
+    "require": {
+        "docopt/docopt": "^1.0",
+        "ext-json": "*",
+        "funct/funct": "^1.5",
+        "symfony/yaml": "^4.4"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "*",
+        "phpunit/phpunit": "^8.1.9",
+        "symfony/var-dumper": "^4.4"
+    }
+}
