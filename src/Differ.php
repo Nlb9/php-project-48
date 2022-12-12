@@ -2,9 +2,9 @@
 
 namespace Differ\Differ;
 
-use function Gendiff\Builder\builderTree;
-use function Gendiff\Formatters\Formatters\renderDiff;
-use function Gendiff\Parsers\parse;
+use function Differ\Builder\builderTree;
+use function Differ\Formatters\Formatters\renderDiff;
+use function Differ\Parsers\parse;
 
 function genDiff($pathToFileBefore, $pathToFileAfter, $format = 'pretty')
 {
