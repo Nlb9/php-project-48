@@ -1,6 +1,6 @@
 <?php
 
-namespace Gendiff\Formatters\RenderPretty;
+namespace Differ\Formatters\RenderPretty;
 
 const INDENT = '    ';
 

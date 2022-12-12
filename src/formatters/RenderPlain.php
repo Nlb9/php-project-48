@@ -1,6 +1,6 @@
 <?php
 
-namespace Gendiff\Formatters\RenderPlain;
+namespace Differ\Formatters\RenderPlain;
 
 function renderPlain(array $tree)
 {

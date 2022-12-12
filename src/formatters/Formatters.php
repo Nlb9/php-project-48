@@ -1,10 +1,10 @@
 <?php
 
-namespace Gendiff\Formatters\Formatters;
+namespace Differ\Formatters\Formatters;
 
-use function Gendiff\Formatters\RenderJson\renderJson;
-use function Gendiff\Formatters\RenderPlain\renderPlain;
-use function Gendiff\Formatters\RenderPretty\renderPretty;
+use function Differ\Formatters\RenderJson\renderJson;
+use function Differ\Formatters\RenderPlain\renderPlain;
+use function Differ\Formatters\RenderPretty\renderPretty;
 
 function renderDiff($format, $tree)
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Gendiff\Builder;
+namespace Differ\Builder;
 
 function builderTree($dataBefore, $dataAfter)
 {

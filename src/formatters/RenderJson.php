@@ -1,6 +1,6 @@
 <?php
 
-namespace Gendiff\Formatters\RenderJson;
+namespace Differ\Formatters\RenderJson;
 
 function renderJson(array $tree)
 {
