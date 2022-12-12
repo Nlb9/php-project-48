@@ -1,11 +1,17 @@
 install:
 	composer install
 
+validate:
+	composer validate
+
 lint:
 	composer exec --verbose phpcs -- --standard=PSR12 src bin
 
 test:
-	composer phpunit tests
+	composer run-script test
 
 test-coverage:
-	composer phpunit tests -- --coverage-clover build/logs/clover.xml
+	composer run-script test-coverage
+
+gendiff:
+	./bin/gendiff

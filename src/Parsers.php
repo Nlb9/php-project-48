@@ -2,24 +2,18 @@
 
 namespace Differ\Parsers;
 
+use Exception;
 use Symfony\Component\Yaml\Yaml;
 
-function parsJson($item){
-    return json_decode($item);
-}
-
-function parsYaml($item){
-    return Yaml::parse($item, Yaml::PARSE_OBJECT_FOR_MAP);
-}
-
-function parse($content, $format){
-    switch ($format) {
+function parse(string $dataType, string $content): object
+{
+    switch ($dataType) {
         case 'json':
-            return parsJson($content);
+            return json_decode($content);
         case 'yaml':
         case 'yml':
-            return parsYaml($content);
+            return Yaml::parse($content, Yaml::PARSE_OBJECT_FOR_MAP);
         default:
-            throw new \Exception("Unknown format $format");
+            throw new Exception("Unknown data type \"$dataType\".");
     }
 }

@@ -2,39 +2,85 @@
 
 namespace Differ\Tests;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 
-use function Gendiff\Differ\genDiff;
+use function Differ\Differ\genDiff;
 
-class GenDiffTest extends TestCase
+class DifferTest extends TestCase
 {
-    public function testGenDiffPrettyFormat()
+    public function getFixturePath(string $fileName): string
     {
-        $expected = file_get_contents($this->getPath('rightPretty'));
-        $this->assertEquals($expected, genDiff($this->getPath('before.json'), $this->getPath('after.json')));
+        return __DIR__ . '/fixtures/' . $fileName;
     }
 
-    public function testGenDiffPlainFormat()
+    public function getFixtureContent(string $fileName): string
     {
-        $expected = file_get_contents($this->getPath('rightPlainTree'));
-        $this->assertEquals($expected, genDiff($this->getPath('before.yml'), $this->getPath('after.yml'), 'plain'));
+        return file_get_contents($this->getFixturePath($fileName));
     }
 
-    public function testGenDiffJsonFormat()
+    public function additionProvider(): array
     {
-        $expected = file_get_contents($this->getPath('rightJsonTree.json'));
-        $this->assertEquals($expected, genDiff($this->getPath('before.json'), $this->getPath('after.json'), 'json'));
+        return [
+            'flat json files -- stylish' => [
+                'stylish.diff',
+                'file1.plain.json',
+                'file2.plain.json',
+            ],
+            'flat yaml files -- stylish' => [
+                'stylish.diff',
+                'file1.plain.yaml',
+                'file2.plain.yaml',
+            ],
+            'complex json files -- stylish' => [
+                'stylish.complex.diff',
+                'file1.complex.json',
+                'file2.complex.json',
+                'stylish'
+            ],
+            'complex yaml files -- stylish' => [
+                'stylish.complex.diff',
+                'file1.complex.yaml',
+                'file2.complex.yaml',
+                'stylish'
+            ],
+            'complex json files -- plain' => [
+                'plain.complex.diff',
+                'file1.complex.json',
+                'file2.complex.json',
+                'plain'
+            ],
+            'complex yaml files -- plain' => [
+                'plain.complex.diff',
+                'file1.complex.yaml',
+                'file2.complex.yaml',
+                'plain'
+            ],
+            'complex json files -- json' => [
+                'json.complex.diff',
+                'file1.complex.json',
+                'file2.complex.json',
+                'json'
+            ],
+            'complex yaml files -- json' => [
+                'json.complex.diff',
+                'file1.complex.yaml',
+                'file2.complex.yaml',
+                'json'
+            ],
+        ];
     }
 
-    public function testException()
-    {
-        $this->expectException(\Exception::class);
+    public function testGenDiff(
+        string $expected,
+        string $pathToFirstFile,
+        string $pathToSecondFile,
+        string $formatType = 'stylish'
+    ) {
+        $pathToFirstFile = $this->getFixturePath($pathToFirstFile);
+        $pathToSecondFile = $this->getFixturePath($pathToSecondFile);
+        $expected = $this->getFixtureContent($expected);
 
-        genDiff($this->getPath('bef.json'), $this->getPath('aft.json'));
-    }
-
-    protected function getPath($filename)
-    {
-        return __DIR__ . "/fixtures/{$filename}";
+        $this->assertEquals($expected, genDiff($pathToFirstFile, $pathToSecondFile, $formatType));
     }
 }
